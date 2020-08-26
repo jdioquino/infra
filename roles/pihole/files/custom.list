@@ -22,7 +22,7 @@
 10.10.0.1 wg-server
 192.168.1.51 vpn
 192.168.1.52 dns
-128.199.113.63 droplet-1
+{{ droplet_ip }} droplet-1
 192.168.1.72 trn.{{ domain_name }}
 192.168.1.72 node-2
 192.168.1.2 wds-client
