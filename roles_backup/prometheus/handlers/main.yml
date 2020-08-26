@@ -1,0 +1,10 @@
+- name: restart prometheus
+  shell:
+    chdir: /docker-data/{{ item }}
+    cmd: "{{ docker_update_command }}"
+  loop:
+    - prometheus
+
+- name: reload prometheus
+  shell:
+    cmd: /usr/local/bin/reload-prometheus

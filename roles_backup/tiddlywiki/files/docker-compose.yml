@@ -1,0 +1,24 @@
+version: "3"
+services:
+  tiddlywiki:
+    image: mazzolino/tiddlywiki
+    container_name: tiddlywiki
+    environment:
+      - USERNAME={{ tiddlywiki_user }}
+      - PASSWORD={{ tiddlywiki_pass }}
+    volumes:
+      - /docker-data/tiddlywiki/config:/var/lib/tiddlywiki
+    networks:
+      - data-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.tiddlywiki.loadbalancer.server.port=8080"
+      - "traefik.http.routers.tiddlywiki.rule=Host(`tid.jdut.me`)"
+      - "traefik.http.routers.tiddlywiki.entrypoints=websecure"
+      - "traefik.http.routers.tiddlywiki.tls.certresolver=le"
+      - "traefik.docker.network=data-net"
+    restart: unless-stopped
+
+networks:
+  data-net:
+    external: true

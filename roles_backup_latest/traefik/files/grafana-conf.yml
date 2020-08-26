@@ -1,0 +1,14 @@
+http:
+  routers:
+    grafana-rtr:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`gra.jdut.me`)"
+      service: "grafana"
+      tls:
+        certResolver: le
+  services:
+    grafana:
+      loadBalancer:
+        servers:
+        - url: "http://192.168.1.71:3000"

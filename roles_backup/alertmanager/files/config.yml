@@ -1,0 +1,20 @@
+global:
+  smtp_from: 'jdut@alertmanager.com'
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_auth_username: 'jdut0000@gmail.com'
+  smtp_auth_password: 'tcgqpnwitgqaxfas'
+  smtp_auth_identity: 'jdut0000@gmail.com'
+
+route:
+  # default route if none match
+  receiver: myself
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 30m
+  group_by: ['alertname', 'job']
+
+receivers:
+- name: myself
+  email_configs:
+  - to: 'jdut0000@gmail.com'
+    send_resolved: true

@@ -1,0 +1,4 @@
+- name: restart jellyfin
+  shell:
+    chdir: /docker-data/jellyfin
+    cmd: "{{ docker_update_command }}"

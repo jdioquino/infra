@@ -1,0 +1,6 @@
+- name: restart alertmanager
+  shell:
+    chdir: /{{ docker_directory }}/{{ item }}
+    cmd: "{{ docker_update_command }}"
+  loop:
+    - alertmanager

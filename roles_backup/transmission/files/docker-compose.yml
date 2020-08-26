@@ -1,0 +1,30 @@
+version: "3"
+services:
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Manila
+      - USER=sep
+      - PASS=TrnLight0pen!
+    volumes:
+      - /docker-data/transmission/config:/config
+      - /nfs-share/torrent:/downloads
+    #  - /nfs-share/movies:/downloads
+      - /docker-data/transmission/watch:/watch
+    networks:
+      - media-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
+      - "traefik.http.routers.transmission.rule=Host(`trn.jdut.me`)"
+      - "traefik.http.routers.transmission.entrypoints=websecure"
+      - "traefik.http.routers.transmission.tls.certresolver=le"
+      - "traefik.docker.network=media-net"
+    restart: unless-stopped
+
+networks:
+  media-net:
+    external: true

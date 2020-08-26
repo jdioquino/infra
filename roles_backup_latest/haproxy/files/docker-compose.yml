@@ -1,0 +1,11 @@
+version: "3"
+services:
+  haproxy:
+    container_name: haproxy
+    image: haproxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /docker-data/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    restart: unless-stopped

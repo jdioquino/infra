@@ -1,0 +1,4 @@
+- name: restart cadvisor
+  shell:
+    chdir: /{{ docker_directory }}/cadvisor
+    cmd: "{{ docker_update_command }}"

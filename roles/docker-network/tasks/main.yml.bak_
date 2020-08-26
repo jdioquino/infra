@@ -1,0 +1,6 @@
+- name: create docker networks
+  shell:
+    cmd: docker network create data-net
+  #ignore_errors: yes
+  failed_when: false
+  changed_when: false

@@ -1,0 +1,70 @@
+input {   
+  beats {
+    port => "5044"
+  }
+}
+
+
+#filter {  
+#  if "docker" in [tags] and [container][labels][com_docker_swarm_service_name] == "ps_grafana" {
+#    grok {
+#      match => { "message" => "%{TIMESTAMP_ISO8601:1} %{WORD:2}\=%{WORD:2} %{GREEDYDATA:message}" }
+#      overwrite => ["message"]
+#    }
+#    mutate {
+#      remove_field => [ "1", "2" ]
+#    }
+#  }
+#  if "docker" in [tags] and [container][labels][com_docker_swarm_service_name] == "ad_healthchecks" {
+#    grok {
+#      match => { "message" => "\[%{DATA:2}\] %{DATA:2}\} \[%{DATA:2}\] %{GREEDYDATA:message}" }
+#      overwrite => ["message"]
+#    }
+#    mutate {
+#      remove_field => [ "2" ]
+#    }
+#  }
+#}
+#
+#
+#filter {
+#  if "syslog" in [tags] and "lighthouse" in [message] {
+#    grok {
+#      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:program}\: %{DATA:1}\"%{DATA:1}\" %{WORD:1}=%{LOGLEVEL} %{GREEDYD
+#ATA:syslog_message}" }
+#    }
+#    mutate {
+#      remove_field => [ "1" ]
+#    }
+#  }
+#  if "syslog" in [tags] and "dockerd" in [message] {
+#    grok {
+#      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:program}\: %{DATA:1}\"%{DATA:1}\" %{WORD:1}=%{LOGLEVEL} %{GREEDYDATA:syslog_message}" }
+#    }
+#    mutate {
+#      remove_field => [ "1" ]
+#    }
+#  }
+#  if "syslog" in [tags] and "lighthouse" not in [message] and "dockerd" not in [message] {
+#    grok {
+#      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:program}(?:\[%{POSINT:syslog_pid}\])?:%{GREEDYDATA:syslog_message}" }
+#    }
+#  }
+#}
+
+
+output {
+  #stdout { codec => rubydebug }
+  if "docker" in [tags] {
+    elasticsearch {
+      hosts => "192.168.1.71:9200"
+      index => "containers"
+    }
+  }
+  else {
+    elasticsearch {
+      hosts => "192.168.1.71:9200"
+      index => "syslogs"
+    }
+  }
+}

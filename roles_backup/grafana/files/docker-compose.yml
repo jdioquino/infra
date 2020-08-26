@@ -1,0 +1,16 @@
+version: "3"
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - /docker-data/influxdb-grafana/grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - data-net
+    restart: unless-stopped
+
+networks:
+  data-net:
+    external: true

@@ -1,0 +1,33 @@
+version: "3"
+services:
+  jellyfin:
+    image: linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Manila
+      - UMASK_SET=022sdasdasd
+    volumes:
+      - /{{ docker_directory }}/jellyfin/config:/config
+#      - /nfs-share/training-videos:/data/training-videos
+      - /nfs-share/movies:/data/movies
+      - /{{ docker_directory }}/jellyfin/transcode:/transcode
+#    ports:
+#      - 8096:8096
+    networks:
+      - media-net
+    devices:
+      - /dev/dri:/dev/dri
+    restart: always
+    labels:
+       - "traefik.enable=true"
+       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+       - "traefik.http.routers.jellyfin.rule=Host(`jel.jdut.me`)"
+       - "traefik.http.routers.jellyfin.entrypoints=websecure"
+       - "traefik.http.routers.jellyfin.tls.certresolver=le"
+       - "traefik.docker.network=media-net"
+
+networks:
+  media-net:
+    external: true

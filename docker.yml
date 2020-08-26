@@ -1,0 +1,51 @@
+- hosts: node-2
+  tags: node-2
+  roles:
+    - docker-network
+    - jellyfin
+    - cadvisor
+    - ddclient
+    - filebeat
+    - traefik
+    - nextcloud
+    - bitwarden
+    - tiddlywiki
+    - heimdall
+    - healthchecks
+    - radarr
+    - jackett
+    - qbittorrent
+    - transmission
+
+- hosts: ds-manager-1
+  tags: ds-manager-1
+  roles:
+    - cadvisor
+    - filebeat
+    - prometheus
+    - grafana
+    - alertmanager
+    - elasticsearch
+    - logstash
+    - kibana
+
+- hosts: droplet-1
+  tags: droplet-1
+  roles:
+    - blackbox-exporter
+    - cadvisor
+    - filebeat
+    - haproxy
+
+- hosts: vpn
+  tags: vpn
+  roles:
+    - cadvisor
+    - filebeat
+
+- hosts: dns
+  tags: dns
+  roles:
+    - cadvisor
+    - filebeat
+    - pihole

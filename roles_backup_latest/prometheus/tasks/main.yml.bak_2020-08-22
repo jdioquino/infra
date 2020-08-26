@@ -1,0 +1,40 @@
+- name: create directory
+  file:
+    path: /{{ docker_directory }}/{{ item }}/
+    state: directory
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
+  become: true
+  loop:
+    - prometheus
+    - "prometheus/data"
+    - "prometheus/config"
+
+- name: install compose file
+  template:
+    src: files/docker-compose.yml
+    dest: /{{ docker_directory }}/{{ item }}/docker-compose.yml
+    mode: "{{ docker_compose_file_mask }}"
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  notify: restart prometheus
+  become: true
+  loop:
+    - prometheus
+
+- name: copy config files
+  copy:
+    src: files/{{ item }}
+    dest: /{{ docker_directory }}/prometheus/config/{{ item }}
+    mode: "{{ docker_compose_file_mask }}"
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  notify: reload prometheus
+  become: true
+  loop:
+    - app.rules
+    - container.rules
+    - host_hardware.rules
+    - prometheus.yml
+    - vm_hardware.rules

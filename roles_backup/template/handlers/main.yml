@@ -1,0 +1,6 @@
+- name: restart radarr
+  shell:
+    chdir: /docker-data/{{ item }}
+    cmd: "{{ docker_update_command }}"
+  loop:
+    - radarr

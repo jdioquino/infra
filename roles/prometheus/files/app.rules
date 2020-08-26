@@ -1,0 +1,10 @@
+groups:
+- name: healthchecks monitoring
+  rules:
+  - alert: cron job checks failed
+    expr: sum by (name) (hc_check_up == 0)
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: 'Failed to verify status of cron job {{ $labels.name }}'

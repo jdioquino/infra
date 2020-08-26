@@ -1,0 +1,14 @@
+http:
+  routers:
+    kibana-rtr:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`kib.jdut.me`)"
+      service: "kibana"
+      tls:
+        certResolver: le
+  services:
+    kibana:
+      loadBalancer:
+        servers:
+        - url: "http://192.168.1.71:5601"

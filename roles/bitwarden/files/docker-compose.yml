@@ -1,0 +1,26 @@
+version: "3"
+services:
+  bitwarden:
+    image: bitwardenrs/server:latest
+    container_name: bitwarden
+    volumes:
+      - /{{ docker_directory }}/bitwarden/data:/data
+    environment:
+      - SIGNUPS_ALLOWED=false
+    networks:
+      - private-net
+    ports:
+      - 80
+      - 443
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
+      - "traefik.http.routers.bitwarden.rule=Host(`bit.{{ domain_name }}`)"
+      - "traefik.http.routers.bitwarden.entrypoints=websecure"
+      - "traefik.http.routers.bitwarden.tls.certresolver=le"
+      - "traefik.docker.network=private-net"
+    restart: unless-stopped
+
+networks:
+  private-net:
+    external: true

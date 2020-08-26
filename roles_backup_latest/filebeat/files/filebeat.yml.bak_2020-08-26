@@ -1,0 +1,56 @@
+filebeat.inputs:
+- type: docker
+  containers.ids: 
+    - '*'
+  fields:
+    type: docker
+  tags: ["docker"]
+  processors:
+    - add_docker_metadata:
+        host: "unix:///var/run/docker.sock"
+    - drop_event:
+        when:
+          or:
+            - equals:
+                container.labels.com_docker_swarm_service_name: "ec_logstash"
+            - equals:
+                container.name: "filebeat"
+            - equals:
+                container.labels.com_docker_swarm_service_name: "ec_kibana"
+            - equals:
+                container.labels.com_docker_swarm_service_name: "ec_elasticsearch"
+            - contains:
+                message: "readjson/docker_json.go"
+    - decode_json_fields:
+        fields: ["message"]
+
+- type: log
+  paths:
+    - /host/log/messages
+  fields:
+    type: syslog
+  tags: ["syslog"]
+  processors:
+    - drop_event:
+        when:
+          or:
+            - contains:
+                message: "guest-ping"    
+
+- type: log
+  paths:
+    - /host/log/cron
+  fields:
+    type: cron
+  tags: ["syslog"]
+
+- type: log
+  paths:
+    - /host/log/yum.log
+  fields:
+    type: yum
+  tags: ["syslog"]
+
+
+output.logstash:
+  hosts: ["192.168.1.71:5044"]

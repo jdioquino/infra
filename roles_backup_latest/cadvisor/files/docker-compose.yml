@@ -1,0 +1,21 @@
+version: "3"
+services:
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor_{{ ansible_hostname }}
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - 9300:8080
+    networks:
+      - data-net
+    privileged: true
+    restart: always
+
+networks:
+  data-net:
+    external: true

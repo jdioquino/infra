@@ -1,0 +1,6 @@
+- name: restart blackbox-exporter
+  shell:
+    chdir: /docker-data/{{ item }}
+    cmd: "{{ docker_update_command }}"
+  loop:
+    - blackbox-exporter

@@ -1,0 +1,45 @@
+groups:
+- name: proxmox host hardware alerts
+  rules:
+  - alert: monitoring service is unreachable
+    expr: up{job="node-exporter",instance="nuc-host:9100"} == 0
+    for: 3m
+    labels:
+      severity: critical
+    annotations:
+      summary: Hardware monitoring service on proxmox host is unreachable
+      description: Failed to scrape {{ $labels.job }} on proxmox host for more than 3 minutes. Service seems down.
+
+  - alert: very high cpu load
+    expr: node_load1{instance="nuc-host:9100"} >= 8 
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: Proxmox host is under very high load
+      description: "Proxmox host is under high load at {{ $value}}. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
+
+  - alert: mount points
+    expr: absent(node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"}) or absent(node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/mnt/ehdd"})
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: Proxmox host mount point not found
+      description: "{{ $labels.mountpoint }} is not mounted on proxmox host."
+
+  - alert: nfs storage utilization
+    expr: (node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"} - node_filesystem_free_bytes{instance="nuc-host:9100",mountpoint="/shares"})/ node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"} * 100 > 95
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: NFS partition is almost full
+
+  - alert: cpu temperature
+    expr: node_hwmon_temp_celsius{chip="platform_coretemp_0",sensor=~"temp2|temp3"} >= 85
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      summary: "{{ $labels.sensor }} temperature is {{ $value }} degrees celcius"

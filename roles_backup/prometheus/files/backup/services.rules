@@ -1,0 +1,38 @@
+groups:
+- name: container alerts
+  rules:
+  - alert: monitoring service is unreachable
+    expr: up{job="cadvisor"} == 0
+    for: 3m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Container monitoring service on {{ $labels.instance }} is unreachable"
+      description: "Failed to scrape {{ $labels.job }} on {{ $labels.instance }} for more than 3 minutes. Service seems down."
+
+  - alert: pihole is down
+    expr: absent(container_memory_usage_bytes{container_label_com_docker_swarm_service_name="prod_pihole"})
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Pihole is down"
+      description: "Pihole container on {{ $labels.instance }} is down for more than 30 seconds."
+
+  - alert: traefik is down
+    expr: absent(container_memory_usage_bytes{container_label_com_docker_swarm_service_name="prod_traefik"})
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Traefik is down"
+      description: "Traefik service is down for more than 30 seconds."
+
+  - alert: jellyfin is down
+    expr: absent(container_memory_usage_bytes{container_label_com_docker_swarm_service_name="prod_jellyfin"})
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Jellyfin is down"
+      description: "Jellyfin service is down for more than 30 seconds."

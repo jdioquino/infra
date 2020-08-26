@@ -1,0 +1,18 @@
+http:
+  routers:
+    pve:
+      entryPoints:
+        - "web"
+      rule: "Host(`proxmox.jdut.me`)"
+      #middlewares:
+      #  - pihole-prefix
+      service: "pve"
+  #middlewares:
+  #  pihole-prefix:
+  #    addPrefix:
+  #      prefix: "/admin"
+  services:
+    pve:
+      loadBalancer:
+        servers:
+        - url: "https://192.168.1.20:8006"

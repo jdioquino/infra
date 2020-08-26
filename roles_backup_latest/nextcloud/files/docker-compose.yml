@@ -1,0 +1,44 @@
+version: "3"
+services:
+  nextcloud:
+    image: linuxserver/nextcloud
+    container_name: nextcloud
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Manila
+    volumes:
+      - /{{ docker_directory }}/nextcloud/appdata:/config
+      - /{{ docker_directory }}/nextcloud/data:/data
+    networks:
+      - private-net
+      - db-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=443"
+      - "traefik.http.services.nextcloud.loadbalancer.server.scheme=https"
+      - "traefik.http.routers.nextcloud.rule=Host(`nex.jdut.me`)"
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.tls.certresolver=le"
+      - "traefik.docker.network=private-net"
+
+  mariadb:
+    image: mariadb
+    container_name: mariadb_nextcloud
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - /{{ docker_directory }}/nextcloud/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=NexLight0pen!
+      - MYSQL_PASSWORD=NexLight0pen!
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    networks:
+      - db-net
+
+networks:
+  private-net:
+    external: true
+  db-net:
+    external: true

@@ -1,0 +1,21 @@
+http:
+  routers:
+    pihole-rtr:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`pih.jdut.me`)"
+      middlewares:
+        - pihole-prefix
+      service: "pihole"
+      tls:
+        certResolver: le
+  middlewares:
+    pihole-prefix:
+      addPrefix:
+        prefix: "/admin"
+  services:
+    pihole:
+      loadBalancer:
+        servers:
+        - url: "http://192.168.1.52:80"
+      passHostHeader: true

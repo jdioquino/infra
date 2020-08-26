@@ -1,0 +1,27 @@
+version: "3"
+services:
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Manila
+      - RUN_OPTS=run options here #optional
+    volumes:
+      - /{{ docker_directory }}/jackett/config:/config
+      - /{{ docker_directory }}/jackett/downloads:/downloads
+    networks:
+      - media-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.jackett.loadbalancer.server.port=9117"
+      - "traefik.http.routers.jackett.rule=Host(`jac.jdut.me`)"
+      - "traefik.http.routers.jackett.entrypoints=websecure"
+      - "traefik.http.routers.jackett.tls.certresolver=le"
+      - "traefik.docker.network=media-net"
+    restart: unless-stopped
+
+networks:
+  media-net:
+    external: true
