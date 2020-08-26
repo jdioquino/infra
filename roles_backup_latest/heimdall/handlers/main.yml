@@ -1,6 +1,0 @@
-- name: restart heimdall
-  shell:
-    chdir: /{{ docker_directory }}/{{ item }}
-    cmd: "{{ docker_update_command }}"
-  loop:
-    - heimdall

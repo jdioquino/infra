@@ -1,6 +1,0 @@
-- name: restart kibana
-  shell:
-    chdir: /{{ docker_directory }}/{{ item }}
-    cmd: "{{ docker_update_command }}"
-  loop:
-    - kibana

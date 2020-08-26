@@ -1,6 +1,0 @@
-- name: restart elasticsearch
-  shell:
-    chdir: /{{ docker_directory }}/{{ item }}
-    cmd: "{{ docker_update_command }}"
-  loop:
-    - elasticsearch

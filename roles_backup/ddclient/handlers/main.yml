@@ -1,6 +1,0 @@
-- name: restart ddclient
-  shell:
-    chdir: /docker-data/{{ item }}
-    cmd: "{{ docker_update_command }}"
-  loop:
-    - ddclient
