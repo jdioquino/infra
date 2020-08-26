@@ -17,14 +17,14 @@ services:
       - --certificatesresolvers.le.acme.dnschallenge=true
       - --certificatesresolvers.le.acme.dnschallenge.provider=cloudflare
 #      - --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --certificatesresolvers.le.acme.email=jdut0000@gmail.com
+      - --certificatesresolvers.le.acme.email={{ ddclient_user }}
       - --certificatesresolvers.le.acme.storage=/acme.json
       - --serversTransport.insecureSkipVerify=true
       - --log.level=DEBUG
       - --log.filePath=/var/log/traefik.log
     environment:
-      - CF_API_EMAIL=jdut0000@gmail.com
-      - CF_API_KEY=59b7173ce135f43cedba81582418cde36b58d
+      - CF_API_EMAIL={{ ddclient_user }}
+      - CF_API_KEY={{ ddclient_pass }}
     ports:
       - "80:80"
       - "443:443"

@@ -1,3 +1,4 @@
 *-conf.yml
 roles_backup/
 roles_backup_latest/
+vault.yml
