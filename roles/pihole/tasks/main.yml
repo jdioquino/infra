@@ -22,7 +22,7 @@
     - pihole
 
 - name: copy custom list
-  copy:
+  template:
     src: files/custom.list
     dest: /{{ docker_directory }}/{{ item }}/custom.list
     mode: "{{ docker_compose_file_mask }}"

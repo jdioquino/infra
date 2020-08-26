@@ -36,10 +36,16 @@
     - { file: 'docker-compose.yml', owner: "{{ docker_user.name }}", mode: '0644', dest: 'traefik' }
 
 - name: copy file providers
-  copy:
-    src: files/
+  template:
+    src: files/{{ item }}
     dest: /{{ docker_directory }}/traefik/file-providers/
     mode: 0644
     owner: sep
     group: sep
   become: true
+  loop:
+    - grafana-conf.yml
+    - kibana-conf.yml
+    - pihole-conf.yml
+    - prometheus-conf.yml
+    - tls-conf.yml
