@@ -4,4 +4,4 @@ roles_backup_latest/
 roles/template/
 vault.yml
 *.bak*
-*.swap*
+*.swap
