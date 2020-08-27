@@ -1,6 +1,7 @@
 *-conf.yml
 roles_backup/
 roles_backup_latest/
+roles/template/
 vault.yml
 *.bak*
-roles/alertmanager/files/config.yml
+*.swap*

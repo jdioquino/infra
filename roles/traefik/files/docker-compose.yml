@@ -47,7 +47,7 @@ services:
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=le"
       - "traefik.http.routers.traefik.middlewares=authtraefik"
-      - "traefik.http.middlewares.authtraefik.basicauth.users=sep:$$2y$$10$$2kzKPyhbpcOvDvskkwtzvOPn6BIOWeErv0nlo5S4WMFfnEtFkUP86"
+      - "traefik.http.middlewares.authtraefik.basicauth.users={{ traefik_dashboard_credentials }}"
 
       # global redirect to https
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
