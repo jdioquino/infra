@@ -1,0 +1,35 @@
+---
+#clone vm
+clonevm:
+  vm1:
+    c_name: dns2
+    c_vmid: 2002
+    c_ip: 192.168.1.82
+    c_cores: 2
+    c_cputype: host
+    c_cpuunits: 2048 #default is 1024
+    c_memory: 1024 #in MB 
+    c_env: test
+    c_user: sep
+    c_group: wheel
+    c_userpw: "{{ vm_userpass }}"
+    c_userpubkey: "{{ vm_userpubkey }}"
+#  vm2:
+#    c_name: nuc-ds-worker2
+#    c_vmid: 132
+#    c_ip: 192.168.1.32
+#    c_cores: 2
+#    c_cpuunits: 1024 #default is 1024
+#    c_memory: 2048 #in MB
+#    c_env: test
+#    c_user: sep
+#    c_group: wheel
+#    c_userpw: "{{ vm_userpass }}"
+#    c_userpubkey: "{{ vm_user-pubkey }}"
+
+
+#delete vm
+deletevm:
+  vm1:
+    d_name: dns2
+    d_ip: 192.168.1.82

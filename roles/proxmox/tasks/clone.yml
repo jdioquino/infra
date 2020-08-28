@@ -1,0 +1,57 @@
+---
+- name: deploy vm from template
+  proxmox_kvm:
+    api_user    : "{{ pve_user }}"
+    api_password: "{{ pve_pw }}"
+    api_host    : "{{ pve_host }}"
+    clone       : "{{ template_name }}"
+    vmid        : "{{ template_id }}"
+    newid       : "{{ item.value.c_vmid }}"
+    name        : "{{ item.value.c_name }}"
+    node        : "{{ pve_node }}"
+    storage     : "{{ pve_storage }}"
+    format      : qcow2
+    timeout     : 300
+    validate_certs: no
+  with_dict: "{{ clonevm }}"
+  register: output
+
+- pause:
+    seconds: 10
+  when: output['changed'] == true
+
+- name: update vm specification
+  proxmox_kvm:
+    api_user    : "{{ pve_user }}"
+    api_password: "{{ pve_pw }}"
+    api_host    : "{{ pve_host }}"
+    name        : "{{ item.value.c_name }}"
+    node        : "{{ pve_node }}"
+    cores       : "{{ item.value.c_cores }}"
+    cpu         : "{{ item.value.c_cputype }}"
+    cpuunits    : "{{ item.value.c_cpuunits }}"
+    memory      : "{{ item.value.c_memory }}"
+    vga         : qxl
+    update      : yes
+  with_dict: "{{ clonevm }}"
+
+- name: set ip address
+  shell:
+    cmd: qm set "{{ item.value.c_vmid }}" --ipconfig0 ip="{{ item.value.c_ip }}"/24,gw=192.168.1.1
+  with_dict: "{{ clonevm }}"
+  when: output['changed'] == true
+
+- name: start vm
+  proxmox_kvm:
+    api_user    : "{{ pve_user }}"
+    api_password: "{{ pve_pw }}"
+    api_host    : "{{ pve_host }}"
+    name        : "{{ item.value.c_name }}"
+    node        : "{{ pve_node }}"
+    state       : started
+  with_dict: "{{ clonevm }}"
+
+- name: pause the play for 20 seconds to give time for vms to boot up
+  pause:
+    seconds: 40
+  when: output['changed'] == true

@@ -1,0 +1,20 @@
+---
+- name: stop vm
+  proxmox_kvm:
+    api_user    : "{{ pve_user }}"
+    api_password: "{{ pve_pw }}"
+    api_host    : "{{ pve_host }}"
+    name        : "{{ item.value.d_name }}"
+    node        : "{{ pve_node }}"
+    state       : stopped
+  with_dict: "{{ deletevm }}"
+
+- name: delete vm
+  proxmox_kvm:
+    api_user    : "{{ pve_user }}"
+    api_password: "{{ pve_pw }}"
+    api_host    : "{{ pve_host }}"
+    name        : "{{ item.value.d_name }}"
+    node        : "{{ pve_node }}"
+    state       : absent
+  with_dict: "{{ deletevm }}"

@@ -1,0 +1,16 @@
+---
+  - name: check for updates
+    yum:
+      list: updates
+      update_cache: true
+    register: check_result
+
+  - name: result
+    debug:
+      msg: "No updates available"
+    when: check_result['results'] | length == 0
+
+  - name: result
+    debug:
+      msg: There are "{{ check_result['results'] | length }}" updates available
+    when: check_result['results'] | length > 0

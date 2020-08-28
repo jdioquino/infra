@@ -1,0 +1,21 @@
+---
+- name: add vms to in-memory inventory to be used by succeeding plays
+  add_host:
+    name: "{{ item.value.c_name }}"
+    groups: temp
+  with_dict: "{{ clonevm }}"
+  changed_when: false
+
+- name: add vm permanently to ansible inventory file
+  lineinfile:
+    path: "{{ project_dir }}/inv.ini"
+    insertafter: "^.{{ item.value.c_env }}."
+    line: "{{ item.value.c_name }}"
+  with_dict: "{{ clonevm }}"
+
+- name: update known_host file
+  shell:
+    cmd: if ! grep "{{ item.value.c_name }}" ~/.ssh/known_hosts; then ssh-keyscan -t ecdsa "{{ item.value.c_name }}" >> ~/.ssh/known_hosts; fi
+  with_dict: "{{ clonevm }}"
+  tags: [ never, clone ]
+  changed_when: false

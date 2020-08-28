@@ -1,0 +1,24 @@
+---
+- name: deploy vm
+  import_tasks: clone.yml
+  tags: [ never, clone ]
+
+- name: delete vm
+  import_tasks: delete.yml
+  tags: [ never, delete ]
+
+- name: stop vm
+  import_tasks: stop.yml
+  tags: [ never, stop ]
+
+- name: stop all vms
+  import_tasks: stop-all.yml
+  tags: [ never, stopall ]
+
+- name: start vm
+  import_tasks: start.yml
+  tags: [ never, start ]
+
+- name: start all vms
+  import_tasks: start-all.yml
+  tags: [ never, startall ]

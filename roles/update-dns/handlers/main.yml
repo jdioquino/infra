@@ -1,0 +1,4 @@
+---
+- name: restart pihole dns
+  shell:
+    cmd: docker exec pihole pihole restartdns

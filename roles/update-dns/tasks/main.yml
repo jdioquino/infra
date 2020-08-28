@@ -1,0 +1,7 @@
+- name: add dns record
+  import_tasks: add-dns.yml
+  tags: [ never, clone ]
+
+- name: remove dns record
+  import_tasks: delete-dns.yml
+  tags: [ never, delete ]

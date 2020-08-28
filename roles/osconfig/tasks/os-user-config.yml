@@ -1,0 +1,42 @@
+---
+  - name: update hostname
+    hostname:
+      name: "{{ item.value.c_name }}"
+    with_dict: "{{ clonevm }}"
+
+  - name: add user
+    user:
+      name: "{{ item.value.c_user }}"
+      password: "{{ item.value.c_userpw }}"
+      groups: "{{ item.value.c_group }}"
+      append: yes
+    with_dict: "{{ clonevm }}"
+  
+  - name: create .ssh directory and authorized_keys file
+    file:
+      path: "{{ item.path }}"
+      state: "{{ item.type }}"
+      owner: "{{ clonevm.vm1.c_user }}"
+      group: "{{ clonevm.vm1.c_user }}"
+      mode: "{{ item.mode }}"  
+    loop:
+    - { path: '/home/{{ clonevm.vm1.c_user }}/.ssh', type: 'directory', mode: '0700' }
+    - { path: '/home/{{ clonevm.vm1.c_user }}/.ssh/authorized_keys', type: 'touch', mode: '0600' }
+
+  - name: import user's public key
+    authorized_key:
+      key: "{{ item.value.c_userpubkey }}"
+      user: "{{ item.value.c_user }}"
+    with_dict: "{{ clonevm }}"
+ 
+  - name: set timezone to Asia/Manila
+    timezone:
+      name: Asia/Manila
+
+  - name: disable root ssh
+    replace:
+      path: /etc/ssh/sshd_config
+      regexp: \#PermitRootLogin yes
+      replace: "PermitRootLogin no"
+      backup: yes
+    notify: "restart sshd"

@@ -1,0 +1,8 @@
+---
+- name: remove dns records
+  lineinfile:
+    path: /docker-data/pihole/etc-pihole/custom.list
+    line: "{{ item.value.c_ip }} {{ item.value.c_name }}"
+    state: absent
+  with_dict: "{{ clonevm }}"
+  notify: restart pihole dns 

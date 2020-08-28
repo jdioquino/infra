@@ -1,0 +1,42 @@
+---
+- name: vm management
+  hosts: nuc-host
+  become: yes
+  roles:
+    - proxmox
+
+- name: update dns
+  hosts: dns
+  become: yes
+  roles:
+    - update-dns
+
+- name: control node management
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - local
+
+- name: user and os management
+  hosts: temp
+  become: yes
+  roles:
+    - osconfig
+    - patching
+
+- name: final
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: result
+    debug:
+      msg: Provisioning complete.
+    tags:
+    - [ never, clone ]
+  
+  - name: result
+    debug:
+      msg: Decommissioning complete.
+    tags:
+    - [ never, delete ]

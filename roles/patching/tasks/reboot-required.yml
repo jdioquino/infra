@@ -1,0 +1,22 @@
+---
+  - name: install yum-utils
+    yum:
+      name: yum-utils
+      state: latest
+
+  - name: check if pending reboot
+    shell:
+      cmd: if [[ $(needs-restarting -r) == *"No core libraries"* ]]; then echo no; else echo yes; fi
+    register: checkreboot
+    changed_when: checkreboot.stdout.find("yes") != -1
+
+  - name: reboot server
+    reboot:
+      reboot_timeout: 1800
+      test_command: uptime 
+    when: checkreboot['changed'] == true
+    register: reboot_result
+
+  - name: results
+    debug: 
+      msg: Server reboot is "{{ reboot_result['changed'] }}"

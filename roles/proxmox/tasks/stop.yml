@@ -1,0 +1,9 @@
+---
+- name: stop single vm
+  proxmox_kvm:
+    api_user    : "{{ pve_user }}"
+    api_password: "{{ pve_pw }}"
+    api_host    : "{{ pve_host }}"
+    name        : "{{ target }}"
+    node        : "{{ pve_node }}"
+    state       : stopped

@@ -1,0 +1,9 @@
+---
+- name: apply patches
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: reboot
+  reboot:
+    reboot_timeout: 1800

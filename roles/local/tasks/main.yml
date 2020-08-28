@@ -1,0 +1,8 @@
+---
+- name: add new vm info
+  import_tasks: add.yml
+  tags: [ never, clone ]
+
+- name: remove vm info
+  import_tasks: del.yml
+  tags: [ never, delete ]

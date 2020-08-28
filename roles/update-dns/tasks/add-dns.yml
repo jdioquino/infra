@@ -1,0 +1,7 @@
+---
+- name: add dns records
+  lineinfile:
+    path: /docker-data/pihole/etc-pihole/custom.list
+    line: "{{ item.value.c_ip }} {{ item.value.c_name }}"
+  with_dict: "{{ clonevm }}"
+  notify: restart pihole dns 

@@ -1,0 +1,24 @@
+---
+- name: apply updates and reboot if necessary
+  import_tasks: patch-reboot.yml
+  tags: [ never, clone, full ]
+
+- name: apply updates but no reboot
+  import_tasks: patch-only.yml
+  tags: [ never, apply ]
+
+- name: check for updates but no install and reboot
+  import_tasks: check-only.yml
+  tags: [ never, check ]
+
+- name: reboot only if necessary
+  import_tasks: reboot-required.yml
+  tags: [ never, required ]
+
+- name: force reboot
+  import_tasks: reboot-force.yml
+  tags: [ never, force ]
+
+- name: patch and reboot nuc-pve
+  import_tasks: nuc-pve.yml
+  tags: [ never, pvedown ]

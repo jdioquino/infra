@@ -1,0 +1,22 @@
+---
+  - name: check if pending reboot after applying patches
+    shell:
+      cmd: if [[ $(needs-restarting -r) == *"No core libraries"* ]]; then echo no; else echo yes; fi
+    register: checkreboot_output
+    changed_when: checkreboot_output.stdout.find("yes") != -1
+    listen: "check reboot"
+    notify: reboot server
+
+  - name: reboot servers
+    reboot:
+      reboot_timeout: 1800
+      test_command: uptime 
+#    when: checkreboot_output['changed'] == true
+    listen: "reboot server"
+    register: reboot_result
+
+  - name: results
+    debug: 
+      msg: There are "{{ check_result['results'] | length }}" updates installed. Server reboot is "{{ reboot_result['changed'] }}"
+    listen: "check reboot"
+    ignore_errors: yes
