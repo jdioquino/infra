@@ -24,6 +24,12 @@
     - osconfig
     - patching
 
+- name: docker installation
+  hosts: temp
+  become: yes
+  roles:
+    - docker-install
+
 - name: final
   hosts: localhost
   gather_facts: false

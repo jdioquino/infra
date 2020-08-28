@@ -1,0 +1,4 @@
+---
+- name: install docker
+  import_tasks: install.yml
+  tags: [ never, install, clone ]

@@ -1,0 +1,58 @@
+---
+  - name: install dependencies
+    yum:
+      name: [ yum-utils, device-mapper-persistent-data, lvm2, epel-release, python3-pip ]
+      state: latest
+
+  - name: add repo
+    get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docer-ce.repo
+
+  - name: install docker
+    yum:
+      name: docker-ce
+      state: latest
+  
+  - name: start and enable docker
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: add ansible and sep to docker group
+    user:
+      name: "{{ item }}"
+      groups: docker
+      append: yes
+    with_items:
+    - ansible
+    - sep
+
+  - name: create docker directory
+    file:
+      path: /docker-data
+      state: directory
+ 
+  - name: install docker-compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.25.4/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}
+      dest: /usr/local/bin/docker-compose
+      mode: 0755
+
+  - set_fact:
+      ansible_python_interpreter: /usr/bin/python3
+
+  - name: install docker python libraries
+    pip:
+      name: docker-compose
+      executable: pip3
+
+  - name: test docker and docker-compose
+    shell:
+      cmd: docker run hello-world && /usr/local/bin/docker-compose --version && docker container prune --force
+    register: output
+  
+  - name: result
+    debug:
+      var: output['stdout_lines']
