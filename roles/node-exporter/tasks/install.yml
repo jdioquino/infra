@@ -1,0 +1,22 @@
+---
+  - name: copy node exporter file and service
+    copy:
+      src: "files/{{ item.file }}"
+      dest: "{{ item.location }}"
+      mode: "{{ item.mod }}"
+    loop:
+    - { file: 'node_exporter', location: '/usr/local/bin', mod: '0755' }
+    - { file: 'node_exporter.service', location: '/etc/systemd/system', mod: '0644' }
+
+  - name: start and enable node exporter service
+    service:
+      name: node_exporter
+      state: started
+      enabled: yes
+  
+  - name: allow port 9100 on firewall
+    firewalld:
+      port: 9100/tcp
+      state: enabled
+      permanent: true
+      immediate: true

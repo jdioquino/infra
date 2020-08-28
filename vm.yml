@@ -23,6 +23,7 @@
   roles:
     - osconfig
     - patching
+    - node-exporter
 
 - name: docker installation
   hosts: temp
