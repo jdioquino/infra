@@ -38,3 +38,12 @@
     - host_hardware.rules
     - prometheus.yml
     - vm_hardware.rules
+
+- name: copy reload-prometheus
+  copy:
+    src: files/reload-prometheus
+    dest: /usr/local/bin/
+    mode: 0755
+    owner: sep
+    group: sep
+  become: true
