@@ -17,7 +17,7 @@
     - qbittorrent
     - transmission
 
-- hosts: ds-manager-1,dns2
+- hosts: ds-manager-1
   tags: ds-manager-1
   roles:
     - cadvisor

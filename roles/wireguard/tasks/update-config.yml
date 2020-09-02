@@ -1,0 +1,9 @@
+---
+- name: compare config files
+  template:
+    src: files/wg-client.conf
+    dest: /etc/wireguard/wg-client.conf
+    mode: 0600
+    owner: root
+    group: root
+  notify: reload wireguard

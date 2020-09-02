@@ -1,0 +1,67 @@
+---
+  - set_fact:
+      ansible_python_interpreter: /usr/bin/python2
+
+  - name: install epel and elrepo repositories
+    yum:
+      name: [ epel-release, https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm ]
+      state: present
+
+  - name: install elrep plugin
+    yum:
+      name: yum-plugin-elrepo
+      state: present
+
+  - name: install wireguard
+    yum:
+      name: [ kmod-wireguard, wireguard-tools ]
+      state: latest
+
+  - name: create wireguard directory
+    file:
+      path: /etc/wireguard
+      state: directory
+
+  - name: import wireguard conf file
+    template:
+      src: files/wg-client.conf
+      dest: /etc/wireguard/
+      mode: 0600
+      owner: root
+      group: root
+
+  - name: install firewalld
+    yum:
+      name: firewalld
+      state: latest
+
+  - name: start and enable firewalld
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+
+  - name: allow port 51820
+    firewalld:
+      port: 51820/udp
+      state: enabled
+      permanent: true
+      immediate: true
+
+  - name: enable packet forwarding
+    lineinfile:
+      path: /etc/sysctl.d/99-sysctl.conf
+      backup: yes
+      line: net.ipv4.ip_forward = 1
+    register: outputforward
+
+  - name: reload sysctl to reflect changes
+    shell:
+      cmd: sysctl -p
+    when: outputforward['changed'] == true
+
+  - name: start and enable wireguard service
+    service:
+      name: wg-quick@wg-client
+      state: started
+      enabled: yes

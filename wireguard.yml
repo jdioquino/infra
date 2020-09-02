@@ -1,0 +1,6 @@
+- name: wireguard
+  hosts: vpn
+  become: yes
+  vars_files: group_vars/all/vault.yml
+  roles:
+    - wireguard

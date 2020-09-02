@@ -1,0 +1,7 @@
+- name: install and configure wireguard
+  import_tasks: install.yml
+  tags: [ never, install ]
+
+- name: update config and reload wireguard
+  import_tasks: update-config.yml
+  tags: [ never, update ]
