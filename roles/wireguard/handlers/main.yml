@@ -1,14 +1,14 @@
 ---
 - name: stop wireguard service
   service:
-    name: wg-quick@wg-client
+    name: wg-quick@{{ wg_service }}
     state: stopped
   listen: "reload wireguard"
 
 - name: copy config file
   template:
-    src: files/wg-client.conf
-    dest: /etc/wireguard/
+    src: files/{{ wg_conffile }}
+    dest: /etc/wireguard/{{ wg_conffile }}
     mode: 0600
     owner: root
     group: root
@@ -16,6 +16,6 @@
 
 - name: start wireguard service
   service:
-    name: wg-quick@wg-client
+    name: wg-quick@{{ wg_service }}
     state: started
   listen: "reload wireguard"

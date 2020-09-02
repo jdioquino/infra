@@ -1,8 +1,8 @@
 ---
 - name: compare config files
   template:
-    src: files/wg-client.conf
-    dest: /etc/wireguard/wg-client.conf
+    src: files/{{ wg_conffile }}
+    dest: /etc/wireguard/{{ wg_conffile }}
     mode: 0600
     owner: root
     group: root
