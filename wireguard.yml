@@ -1,6 +1,5 @@
 - name: wireguard
-  hosts: vpn,droplet-1
+  hosts: vpn,droplet-1,localhost
   become: yes
-#  vars_files: group_vars/all/vault.yml
   roles:
     - wireguard
