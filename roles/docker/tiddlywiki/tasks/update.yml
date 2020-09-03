@@ -1,0 +1,6 @@
+- name: restart tiddlywiki
+  shell:
+    chdir: /{{ docker_directory }}/{{ item }}
+    cmd: "{{ docker_update_command }}"
+  loop:
+    - tiddlywiki

@@ -1,5 +1,5 @@
 - hosts: node-2
-  tags: node-2
+  #tags: node-2
   roles:
     - docker-network
     - jellyfin
@@ -18,7 +18,7 @@
     - transmission
 
 - hosts: ds-manager-1
-  tags: ds-manager-1
+  #tags: ds-manager-1
   roles:
     - cadvisor
     - filebeat
@@ -30,7 +30,7 @@
     - kibana
 
 - hosts: droplet-1
-  tags: droplet-1
+  #tags: droplet-1
   roles:
     - blackbox-exporter
     - cadvisor
@@ -38,13 +38,13 @@
     - haproxy
 
 - hosts: vpn
-  tags: vpn
+  #tags: vpn
   roles:
     - cadvisor
     - filebeat
 
 - hosts: dns
-  tags: dns
+  #tags: dns
   roles:
     - cadvisor
     - filebeat

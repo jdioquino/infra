@@ -1,23 +1,7 @@
-- name: create directory
-  file:
-    path: /{{ docker_directory }}/{{ item }}/
-    state: directory
-    owner: "{{ docker_user.name }}"
-    group: "{{ docker_user.name }}"
-    mode: "{{ docker_compose_directory_mask }}"
-  become: true
-  loop:
-    - filebeat
+- name: deploy compose files
+  import_tasks: deploy.yml
+  tags: [ never, deploy ]
 
-- name: install compose and config file
-  template:
-    src: files/{{ item.file }}
-    dest: /{{ docker_directory }}/filebeat/
-    mode: "{{ item.mode }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.owner }}"
-  notify: restart filebeat
-  become: true
-  loop:
-    - { file: 'docker-compose.yml', owner: "{{ docker_user.name }}", mode: '0644' }
-    - { file: 'filebeat.yml', owner: 'root', mode: '0644' }
+- name: update container
+  import_tasks: update.yml
+  tags: [ never, update ]
