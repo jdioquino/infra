@@ -7,8 +7,8 @@ services:
       - PUID=1001
       - PGID=1001
       - TZ=Asia/Manila
-      - USER=sep
-      - PASS=TrnLight0pen!
+      - USER={{ docker_user.name }}
+      - PASS={{ transmission_pass }}
     volumes:
       - /{{ docker_directory }}/transmission/config:/config
       - /nfs-share/torrent:/downloads
