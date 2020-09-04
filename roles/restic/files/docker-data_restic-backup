@@ -20,7 +20,7 @@ else:
 
     if check_mountpoint2 == 0:
         print(f'{mountpoint} is found now. Synchronizing files..')
-        sync = os.system(f'restic --password-file=secret -r {dest} backup {src}')
+        sync = os.system(f'restic --password-file=/opt/scripts/secret -r {dest} backup {src}')
         print('Done!')
     else:
         print(f'Failed to remount {mountpoint}')
