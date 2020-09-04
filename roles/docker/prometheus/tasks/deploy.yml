@@ -23,7 +23,17 @@
   loop:
     - prometheus
 
-- name: copy config files
+- name: copy config file
+  template:
+    src: files/prometheus.yml
+    dest: /{{ docker_directory }}/prometheus/config/
+    mode: "{{ docker_compose_file_mask }}"
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  notify: reload prometheus
+  become: true
+
+- name: copy rule files
   copy:
     src: files/{{ item }}
     dest: /{{ docker_directory }}/prometheus/config/{{ item }}
@@ -33,10 +43,9 @@
   notify: reload prometheus
   become: true
   loop:
-    #- app.rules
+    - app.rules
     - container.rules
     - host_hardware.rules
-    - prometheus.yml
     - vm_hardware.rules
 
 - name: copy reload-prometheus

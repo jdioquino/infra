@@ -15,7 +15,7 @@ rule_files:
   - vm_hardware.rules
   - container.rules
   - host_hardware.rules
-  #- app.rules
+  - app.rules
 
 scrape_configs:
   - job_name: 'prometheus'
@@ -41,11 +41,11 @@ scrape_configs:
         - wg-server:9300
         - node-2:9300
 
-  #- job_name: 'healthchecks-my-cron-jobs'
-  #  scheme: http
-  #  metrics_path: /projects/11ec1a4d-e9a3-433e-a45d-e5355f5e9929/metrics/AgIN1BKJMET-tuF6HmHVnq6jhRtnzjSd
-  #  static_configs:
-  #  - targets: ['hea.{{ domain_name }}']
+  - job_name: 'healthchecks-my-cron-jobs'
+    scheme: http
+    metrics_path: /projects/fdaff6ef-fd97-4b23-8487-ced3a8b480c5/metrics/{{ hc_api }}
+    static_configs:
+    - targets: ['hea.{{ domain_name }}']
 
   - job_name: 'blackbox'
     metrics_path: /probe
