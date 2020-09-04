@@ -45,3 +45,27 @@
     shell:
       cmd: ip route add 10.10.0.0/24 via 192.168.1.51 dev eth0
     failed_when: false
+
+  - name: install packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - nfs-utils
+      - bash-completion
+
+  - name: create nfs directory
+    file:
+      path: /nfs-share
+      state: directory
+      owner: "{{ docker_user.name }}"
+      group: "{{ docker_user.name }}"
+
+  - name: mount nfs share permanently
+    lineinfile:
+      path: /etc/fstab
+      line: 192.168.1.20:/ /nfs-share nfs defaults 0 0
+
+  - name: mount all
+    shell:
+      cmd: mount -a  

@@ -1,0 +1,5 @@
+- name: restic
+  hosts: vpn,dns,ds-manager-1,node-2
+  become: yes
+  roles:
+    - restic

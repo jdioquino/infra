@@ -9,3 +9,4 @@ wg_privatekey: !vault |
 
 wg_conffile: wg-client.conf
 wg_service: wg-client
+hc_id: 26d98546-3b66-49a0-9d78-b5b527d55a96

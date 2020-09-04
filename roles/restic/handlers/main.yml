@@ -1,0 +1,3 @@
+- name: initialize repository
+  shell: 
+    cmd: restic init --repo /nfs-share/backup/docker-data_{{ ansible_hostname }} --password-file /opt/scripts/secret
