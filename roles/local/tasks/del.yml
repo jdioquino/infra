@@ -1,11 +1,4 @@
 ---
-#- name: remove vm entry from local host file
-#  lineinfile:
-#    regexp: "{{ item.value.d_name }}$"
-#    path: /etc/hosts
-#    state: absent
-#  with_dict: "{{ deletevm }}"
-
 - name: remove vm from ansible inventory
   lineinfile:
     regexp: "{{ item.value.d_name }}$"
@@ -27,8 +20,8 @@
     state: absent
   with_dict: "{{ deletevm }}"
 
-#- name: remove vm files from host_vars
-#  file:
-#    path: {{ project_dir }}/host_vars/{{ item.value.d_name }}
-#    state: absent
-#  with_dict: "{{ deletevm }}"
+- name: remove vm files from host_vars
+  file:
+    path: "{{ project_dir }}/host_vars/{{ item.value.d_name }}"
+    state: absent
+  with_dict: "{{ deletevm }}"

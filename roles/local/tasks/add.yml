@@ -1,4 +1,12 @@
 ---
+- name: create entry in host vars
+  file:
+    path: "{{ project_dir }}/host_vars/{{ item.value.c_name }}"
+    state: touch
+    owner: ansible
+    group: ansible
+  with_dict: "{{ clonevm }}"
+
 - name: add vms to in-memory inventory to be used by succeeding plays
   add_host:
     name: "{{ item.value.c_name }}"
