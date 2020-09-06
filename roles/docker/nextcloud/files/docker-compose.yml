@@ -22,6 +22,7 @@ services:
       - "traefik.http.routers.nextcloud.entrypoints=websecure"
       - "traefik.http.routers.nextcloud.tls.certresolver=le"
       - "traefik.docker.network=private-net"
+    restart: unless-stopped
 
   mariadb:
     image: mariadb
@@ -36,6 +37,7 @@ services:
       - MYSQL_USER={{ nextcloud_user }}
     networks:
       - db-net
+    restart: unless-stopped
 
 networks:
   private-net:

@@ -1,0 +1,5 @@
+- name: patch servers
+  hosts: onsite,offsite
+  become: yes
+  roles:
+    - patching
