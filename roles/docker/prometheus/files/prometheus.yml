@@ -62,7 +62,7 @@ scrape_configs:
         #- http://pih.{{ domain_name }}
         - http://jel.{{ domain_name }}
         #- http://air.{{ domain_name }}
-        #- http://qbi.{{ domain_name }}
+        - http://qbi.{{ domain_name }}
         #- http://jac.{{ domain_name }}
         #- http://rad.{{ domain_name }}
         #- http://por.{{ domain_name }}
