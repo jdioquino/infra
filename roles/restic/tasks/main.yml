@@ -7,6 +7,7 @@
 - name: enable copr repo
   shell:
     cmd: yum copr enable copart/restic -y
+  changed_when: false
 
 - name: install restic and wget
   yum:
@@ -38,7 +39,7 @@
 - name: create a cron job
   cron:
     name: backup docker files to nfs
-    minute: 45
+    minute: '45'
     user: root
     job: /opt/scripts/docker-data_restic-backup && wget http://hea.{{ domain_name }}/ping/{{ hc_id }} && rm -rf {{ hc_id }} 
     cron_file: backup_docker-files

@@ -32,6 +32,7 @@
 - hosts: droplet-1
   #tags: droplet-1
   roles:
+    - docker-network
     - blackbox-exporter
     - cadvisor
     - filebeat
@@ -40,12 +41,14 @@
 - hosts: vpn
   #tags: vpn
   roles:
+    - docker-network
     - cadvisor
     - filebeat
 
 - hosts: dns
   #tags: dns
   roles:
+    - docker-network
     - cadvisor
     - filebeat
     - pihole

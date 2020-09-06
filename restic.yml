@@ -1,5 +1,5 @@
 - name: restic
-  hosts: vpn,dns,node-2,node-3
+  hosts: onsite
   become: yes
   roles:
     - restic
