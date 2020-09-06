@@ -53,4 +53,4 @@ filebeat.inputs:
 
 
 output.logstash:
-  hosts: ["192.168.1.71:5044"]
+  hosts: ["192.168.1.73:5044"]

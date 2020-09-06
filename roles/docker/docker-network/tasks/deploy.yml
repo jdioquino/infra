@@ -1,0 +1,16 @@
+- set_fact:
+    ansible_python_interpreter: /usr/bin/python3
+ 
+- name: create docker networks
+  docker_network:
+    name: "{{ item }}"
+  loop:
+    - data-net
+    - media-net
+    - private-net
+    - proxy-net
+    - db-net
+    - elastic-net
+
+- set_fact:
+    ansible_python_interpreter: /usr/bin/python

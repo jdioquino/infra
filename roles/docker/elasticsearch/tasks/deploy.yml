@@ -20,3 +20,22 @@
   become: true
   loop:
     - elasticsearch
+
+- name: create data directory
+  file:
+    path: /{{ docker_directory }}/{{ item }}/data
+    state: directory
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+    mode: 0777
+  become: true
+  loop:
+    - elasticsearch
+
+- name: allow port 9200
+  firewalld:
+    port: 9200/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  become: true

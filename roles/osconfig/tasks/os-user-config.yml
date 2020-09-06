@@ -41,18 +41,10 @@
       backup: yes
     notify: "restart sshd"
 
-  - name: create a route for wireguard traffic
-    shell:
-      cmd: ip route add 10.10.0.0/24 via 192.168.1.51 dev eth0
-    failed_when: false
-
   - name: install packages
     yum:
-      name: "{{ item }}"
+      name: [ nfs-utils, bash-completion, wget, nc ]
       state: present
-    with_items:
-      - nfs-utils
-      - bash-completion
 
   - name: create nfs directory
     file:
@@ -68,4 +60,14 @@
 
   - name: mount all
     shell:
-      cmd: mount -a  
+      cmd: mount -a
+
+  - name: create a route for wireguard traffic
+    copy:
+      src: files/route-eth0
+      dest: /etc/sysconfig/network-scripts/
+
+  - name: reboot server to properly apply network route
+    reboot:
+      reboot_timeout: 1800
+      test_command: uptime

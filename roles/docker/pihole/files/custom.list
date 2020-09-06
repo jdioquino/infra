@@ -1,4 +1,4 @@
-192.168.1.71 ds-manager-1
+192.168.1.73 node-3
 192.168.1.72 jel.{{ domain_name }}
 192.168.1.72 kib.{{ domain_name }}
 192.168.1.72 hei.{{ domain_name }}

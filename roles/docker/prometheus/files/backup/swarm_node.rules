@@ -38,12 +38,12 @@ groups:
       description: "Swarm node / partition usage is {{ humanize $value}}%. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
 
   - alert: mount points
-    expr: absent(node_filesystem_size_bytes{mountpoint="/nfs-share",instance="192.168.1.71:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/gluster",instance="192.168.1.71:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/{{ docker_directory }}",instance="192.168.1.71:9100"})
+    expr: absent(node_filesystem_size_bytes{mountpoint="/nfs-share",instance="192.168.1.73:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/gluster",instance="192.168.1.73:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/{{ docker_directory }}",instance="192.168.1.73:9100"})
     for: 1m
     labels:
       severity: critical
     annotations:
-      summary: '{{ $labels.mountpoint }} is not mounted on ds-manager-1'
+      summary: '{{ $labels.mountpoint }} is not mounted on node-3'
 
   - alert: mount points
     expr: absent(node_filesystem_size_bytes{mountpoint="/nfs-share",instance="192.168.1.82:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/gluster",instance="192.168.1.82:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/{{ docker_directory }}",instance="192.168.1.82:9100"})

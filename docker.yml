@@ -17,9 +17,9 @@
     - qbittorrent
     - transmission
 
-- hosts: ds-manager-1
-  #tags: ds-manager-1
+- hosts: node-3
   roles:
+    - docker-network
     - cadvisor
     - filebeat
     - prometheus

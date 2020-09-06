@@ -38,32 +38,16 @@ groups:
       description: "Swarm node / partition usage is {{ humanize $value}}%. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
 
   - alert: mount points
-    expr: absent(node_filesystem_size_bytes{mountpoint="/nfs-share",instance="ds-manager-1:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/docker-data",instance="ds-manager-1:9100"})
+    expr: absent(node_filesystem_size_bytes{mountpoint="/nfs-share"})
     for: 1m
     labels:
       severity: critical
     annotations:
-      summary: '{{ $labels.mountpoint }} is not mounted on ds-manager-1'
-
-#  - alert: mount points
-#    expr: absent(node_filesystem_size_bytes{mountpoint="/nfs-share",instance="ds-worker-2:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/gluster",instance="ds-worker-2:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/{{ docker_directory }}",instance="ds-worker-2:9100"})
-#    for: 1m
-#    labels:
-#      severity: critical
-#    annotations:
-#      summary: '{{ $labels.mountpoint }} is not mounted on ds-worker-2'
-
-#  - alert: mount points
-#    expr: absent(node_filesystem_size_bytes{mountpoint="/nfs-share",instance="ds-worker-1:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/gluster",instance="ds-worker-1:9100"}) or absent(node_filesystem_size_bytes{mountpoint="/{{ docker_directory }}",instance="ds-worker-1:9100"})
-#    for: 1m
-#    labels:
-#      severity: critical
-#    annotations:
-#      summary: '{{ $labels.mountpoint }} is not mounted on ds-worker-1'
+      summary: '{{ $labels.mountpoint }} is not mounted on {{ $labels.instance }}'
 
   - alert: network connectivity
     #expr: sum(rate(node_network_receive_bytes_total{device=~"nebula1|wg-client",instance!="nuc-host:9100"}[1m])) == 0
-    expr: sum(rate(node_network_receive_bytes_total{device=~"nebula1|wg-client",instance=~"ds-manager-1:9100|vpn:9100"}[2m])) == 0
+    expr: sum(rate(node_network_receive_bytes_total{device=~"nebula1|wg-client",instance=~"node-3:9100|vpn:9100"}[2m])) == 0
     for: 1m
     labels:
       severity: critical

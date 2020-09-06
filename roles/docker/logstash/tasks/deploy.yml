@@ -32,3 +32,11 @@
   become: true
   loop:
     - logstash
+
+- name: allow port 5044
+  firewalld:
+    port: 5044/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  become: true

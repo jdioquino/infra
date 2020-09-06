@@ -30,3 +30,11 @@
     group: "{{ docker_user.name }}"
   notify: restart alertmanager
   become: true
+
+- name: allow port 9093
+  firewalld:
+    port: 9093/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  become: true
