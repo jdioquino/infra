@@ -1,5 +1,4 @@
 - hosts: node-2
-  #tags: node-2
   roles:
     - docker-network
     - jellyfin
@@ -29,26 +28,23 @@
     - logstash
     - kibana
 
-- hosts: droplet-1
-  #tags: droplet-1
-  roles:
-    - docker-network
-    - blackbox-exporter
-    - cadvisor
-    - filebeat
-    - haproxy
-
 - hosts: vpn
-  #tags: vpn
   roles:
     - docker-network
     - cadvisor
     - filebeat
 
 - hosts: dns
-  #tags: dns
   roles:
     - docker-network
     - cadvisor
     - filebeat
     - pihole
+
+- hosts: droplet-1
+  roles:
+    - docker-network
+    - blackbox-exporter
+    - cadvisor
+    - filebeat
+    - haproxy
