@@ -4,7 +4,8 @@ services:
     image: grafana/grafana
     container_name: grafana
     volumes:
-      - /{{ docker_directory }}/influxdb-grafana/grafana:/var/lib/grafana
+      #- /{{ docker_directory }}/influxdb-grafana/grafana:/var/lib/grafana
+      - /{{ docker_directory }}/grafana/data:/var/lib/grafana
     ports:
       - 3000:3000
     networks:

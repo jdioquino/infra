@@ -9,7 +9,8 @@ check_mountpoint = os.system(f'df -h | grep -i {mountpoint} &> /dev/null')
 
 if check_mountpoint == 0:
     print('Synchronizing files..')
-    sync = os.system(f'restic --password-file=/opt/scripts/secret -r {dest} backup {src} --exclude=/docker-data/elasticstack/data')
+    #sync = os.system(f'restic --password-file=/opt/scripts/secret -r {dest} backup {src} --exclude=/docker-data/elasticstack/data')
+    sync = os.system(f'restic --password-file=/opt/scripts/secret -r {dest} backup {src}')
     print('Done!')
 
 else:
