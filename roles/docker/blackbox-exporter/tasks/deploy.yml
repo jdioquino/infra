@@ -29,3 +29,11 @@
     owner: "{{ docker_user.name }}"
     group: "{{ docker_user.name }}"
   become: true
+
+- name: allow port 9115
+  firewalld:
+    port: 9115/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  become: true
