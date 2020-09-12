@@ -4,3 +4,8 @@
       name: sshd
       state: restarted  
     listen: "restart sshd"
+
+  - name: reboot server to properly apply network route
+    reboot:
+      reboot_timeout: 1800
+      test_command: uptime

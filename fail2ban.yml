@@ -1,0 +1,17 @@
+---
+- hosts: droplet-1,node-2
+  become: yes
+  tasks:
+    - name: install epel repository
+      yum:
+        name: epel-release
+        state: present
+    - name: install fail2ban
+      yum:
+        name: [ fail2ban, fail2ban-systemd, fail2ban-firewalld ]
+        state: present
+    - name: start and enable fail2ban
+      service:
+        name: fail2ban
+        state: started
+        enabled: yes 

@@ -1,5 +1,5 @@
 - name: wireguard
-  hosts: vpn,droplet-1,localhost
+  hosts: vpn,localhost
   become: yes
   roles:
     - wireguard

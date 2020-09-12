@@ -1,8 +1,16 @@
 ---
-- name: create entry in host vars
-  file:
-    path: "{{ project_dir }}/host_vars/{{ item.value.c_name }}"
-    state: touch
+#- name: create entry in host vars
+#  file:
+#    path: "{{ project_dir }}/host_vars/{{ item.value.c_name }}"
+#    state: touch
+#    owner: ansible
+#    group: ansible
+#  with_dict: "{{ clonevm }}"
+
+- name: create entry in hostvars
+  template:
+    src: hostinfo.j2
+    dest: "{{ project_dir }}/host_vars/{{ item.value.c_name }}"
     owner: ansible
     group: ansible
   with_dict: "{{ clonevm }}"

@@ -1,8 +1,12 @@
 ---
+#  - name: update hostname
+#    hostname:
+#      name: "{{ item.value.c_name }}"
+#    with_dict: "{{ clonevm }}"
+
   - name: update hostname
     hostname:
-      name: "{{ item.value.c_name }}"
-    with_dict: "{{ clonevm }}"
+      name: "{{ hostname }}"
 
   - name: add user
     user:
@@ -66,8 +70,9 @@
     copy:
       src: files/route-eth0
       dest: /etc/sysconfig/network-scripts/
+    notify: reboot server to properly apply network route
 
-  - name: reboot server to properly apply network route
-    reboot:
-      reboot_timeout: 1800
-      test_command: uptime
+#  - name: reboot server to properly apply network route
+#    reboot:
+#      reboot_timeout: 1800
+#      test_command: uptime
