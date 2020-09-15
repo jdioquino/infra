@@ -1,4 +1,4 @@
-version: "3"
+version: "2.2"
 services:
   radarr:
     image: linuxserver/radarr
@@ -22,6 +22,7 @@ services:
       - "traefik.http.routers.radarr.tls.certresolver=le"
       - "traefik.docker.network=media-net"
     restart: unless-stopped
+    cpus: '1'
 
 networks:
   media-net:
