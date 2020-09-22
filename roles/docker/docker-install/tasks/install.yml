@@ -11,8 +11,9 @@
 
   - name: install docker
     yum:
+      #name: [ docker-ce-18.06.1.ce-3.el7 ]
       name: docker-ce
-      state: latest
+      state: present
   
   - name: start and enable docker
     service:

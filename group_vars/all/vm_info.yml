@@ -8,7 +8,7 @@ clonevm:
     c_cores: 2
     c_cputype: host
     c_cpuunits: 2048 #default is 1024
-    c_memory: 1024 #in MB 
+    c_memory: 2048 #in MB 
     c_env: test
     c_user: sep
     c_group: wheel
@@ -21,7 +21,7 @@ clonevm:
     c_cores: 2
     c_cputype: host
     c_cpuunits: 2048
-    c_memory: 1024
+    c_memory: 2048
     c_env: test
     c_user: sep
     c_group: wheel
@@ -34,7 +34,7 @@ clonevm:
     c_cores: 2
     c_cputype: host
     c_cpuunits: 2048
-    c_memory: 1024
+    c_memory: 2048
     c_env: test
     c_user: sep
     c_group: wheel
