@@ -29,7 +29,7 @@ groups:
       description: "Swarm node memory usage is {{ humanize $value}}%. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
 
   - alert: storage utilization
-    expr: (node_filesystem_size_bytes{device="/dev/mapper/centos-root"} - node_filesystem_free_bytes{device="/dev/mapper/centos-root"}) / node_filesystem_size_bytes{device="/dev/mapper/centos-root"}  * 100 > 90
+    expr: (node_filesystem_size_bytes{device="/dev/mapper/centos-root"} - node_filesystem_free_bytes{device="/dev/mapper/centos-root"}) / node_filesystem_size_bytes{device="/dev/mapper/centos-root"}  * 100 > 95
     for: 10m
     labels:
       severity: warning

@@ -1,0 +1,7 @@
+- hosts: droplet-1
+  roles:
+    - docker-network
+    - blackbox-exporter
+    - cadvisor
+    - filebeat
+    - haproxy

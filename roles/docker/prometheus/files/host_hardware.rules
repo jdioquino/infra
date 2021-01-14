@@ -20,7 +20,7 @@ groups:
       description: "Proxmox host is under high load at {{ $value}}. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
 
   - alert: mount points
-    expr: absent(node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"}) or absent(node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/mnt/ehdd"})
+    expr: absent(node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"}) #or absent(node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/mnt/ehdd"})
     for: 1m
     labels:
       severity: critical
@@ -29,7 +29,7 @@ groups:
       description: "{{ $labels.mountpoint }} is not mounted on proxmox host."
 
   - alert: nfs storage utilization
-    expr: (node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"} - node_filesystem_free_bytes{instance="nuc-host:9100",mountpoint="/shares"})/ node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"} * 100 > 95
+    expr: (node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"} - node_filesystem_free_bytes{instance="nuc-host:9100",mountpoint="/shares"})/ node_filesystem_size_bytes{instance="nuc-host:9100",mountpoint="/shares"} * 100 > 99
     for: 1m
     labels:
       severity: warning
