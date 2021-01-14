@@ -1,7 +1,0 @@
-- hosts: lighthouse
-  roles:
-    - docker-network
-    - blackbox-exporter
-    - cadvisor
-    - filebeat
-    - haproxy
