@@ -1,4 +1,4 @@
-- hosts: droplet-1
+- hosts: lighthouse
   roles:
     - docker-network
     - blackbox-exporter
