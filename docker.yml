@@ -41,7 +41,7 @@
     - filebeat
     - pihole
 
-- hosts: lighthouse
+- hosts: droplet-1
   roles:
     - docker-network
     - blackbox-exporter
