@@ -1,13 +1,13 @@
 version: "3"
 services:
   qbittorrent:
-    image: linuxserver/qbittorrent
+    image: linuxserver/qbittorrent:14.3.2.99202101080148-7233-0cbd15890ubuntu18.04.1-ls109
     container_name: qbittorrent
     environment:
       - PUID=1001
       - PGID=1001
       - TZ=Asia/Manila
-      - UMASK_SET=022
+      - UMASK=022
       - WEBUI_PORT=8090
     volumes:
       - /{{ docker_directory }}/qbittorrent/config:/config
