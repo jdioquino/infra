@@ -1,50 +1,7 @@
----
-- name: install yum-plugin-copr
-  yum:
-    name: yum-plugin-copr
-    state: latest
+- name: deploy restic to nfs
+  import_tasks: nfs.yml
+  tags: [ never, nfs ]
 
-- name: enable copr repo
-  shell:
-    cmd: yum copr enable copart/restic -y
-  changed_when: false
-
-- name: install restic and wget
-  yum:
-    name: [ restic, wget ]
-    state: latest
-
-- name: create backup and scripts directory
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ docker_user.name }}"
-    group: "{{ docker_user.name }}"
-  with_items:
-    - /nfs-share/backup/docker-data_{{ ansible_hostname }}
-    - /opt/scripts
-  notify: initialize repository
-
-- name: copy restic files
-  template:
-    src: files/{{ item.file }}
-    dest: /opt/scripts
-    mode: "{{ item.mod }}"
-    owner: "{{ docker_user.name }}"
-    group: "{{ docker_user.name }}"
-  loop:
-    - { file: 'docker-data_restic-backup', mod: '0755' }
-    - { file: 'secret', mod: '0600' }
-    - { file: 'remove-old-restic-backup.sh', mod: '0755' }
-
-- name: create cron jobs
-  cron:
-    name: "{{ item.name }}"
-    minute: "{{ item.minute }}"
-    hour: "{{ item.hour }}"
-    user: "{{ item.user }}"
-    job: "{{ item.job }}"
-    cron_file: "{{ item.file }}"
-  loop:
-    - { name: 'backup docker files to nfs', minute: '45', hour: '*',  user: 'root', job: '/opt/scripts/docker-data_restic-backup && wget http://hea.{{ domain_name }}/ping/{{ hc_id }} && rm -rf {{ hc_id }}', file: 'backup_docker-files' }
-    - { name: 'remove old restic backups', minute: '*', hour: '2',  user: 'root', job: '/opt/scripts/remove-old-restic-backup.sh', file: 'remove-old-restic-backup' }
+- name: deploy restic to s3
+  import_tasks: s3.yml
+  tags: [ never, s3 ]

@@ -1,0 +1,39 @@
+---
+- name: install yum-plugin-copr
+  yum:
+    name: yum-plugin-copr
+    state: latest
+
+- name: enable copr repo
+  shell:
+    cmd: yum copr enable copart/restic -y
+  changed_when: false
+
+- name: install restic and wget
+  yum:
+    name: [ restic, wget ]
+    state: latest
+
+- name: Create scripts directory
+  file:
+    path: /opt/scripts
+    state: directory
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+
+- name: copy restic to s3 script
+  template:
+    src: files/nextcloud_to_s3.sh
+    dest: /opt/scripts
+    mode: 0755
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+
+- name: create cron jobs
+  cron:
+    name: nextcloud to s3
+    minute: 20
+    hour: "*"
+    user: root
+    job: /opt/scripts/nextcloud_to_s3.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id3 }} && rm -rf {{ hc_id3 }}
+    cron_file: nextcloud-to-s3
