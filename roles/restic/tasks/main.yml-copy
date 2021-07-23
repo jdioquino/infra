@@ -37,14 +37,10 @@
     - { file: 'secret', mod: '0600' }
     - { file: 'remove-old-restic-backup.sh', mod: '0755' }
 
-- name: create cron jobs
+- name: create a cron job
   cron:
-    name: "{{ item.name }}"
-    minute: "{{ item.minute }}"
-    hour: "{{ item.hour }}"
-    user: "{{ item.user }}"
-    job: "{{ item.job }}"
-    cron_file: "{{ item.file }}"
-  loop:
-    - { name: 'backup docker files to nfs', minute: '45', hour: '*',  user: 'root', job: '/opt/scripts/docker-data_restic-backup && wget http://hea.{{ domain_name }}/ping/{{ hc_id }} && rm -rf {{ hc_id }}', file: 'backup_docker-files' }
-    - { name: 'remove old restic backups', minute: '*', hour: '2',  user: 'root', job: '/opt/scripts/remove-old-restic-backup.sh', file: 'remove-old-restic-backup' }
+    name: backup docker files to nfs
+    minute: '45'
+    user: root
+    job: /opt/scripts/docker-data_restic-backup && wget http://hea.{{ domain_name }}/ping/{{ hc_id }} && rm -rf {{ hc_id }} 
+    cron_file: backup_docker-files
