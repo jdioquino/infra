@@ -23,17 +23,20 @@
 
 - name: copy restic to s3 script
   template:
-    src: files/nextcloud_to_s3.sh
-    dest: /opt/scripts
-    mode: 0755
+    src: files/{{ item.file }}
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
     owner: "{{ docker_user.name }}"
     group: "{{ docker_user.name }}"
+  loop:
+    - { file: 'nextcloud_to_s3.sh', dest: '/opt/scripts', mode: '0755' }
+    - { file: '.restic.env', dest: '/home/sep', mode: '0600' }
 
 - name: create cron jobs
   cron:
     name: nextcloud to s3
-    minute: 20
+    minute: 30
     hour: "*"
     user: root
-    job: /opt/scripts/nextcloud_to_s3.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id3 }} && rm -rf {{ hc_id3 }}
+    job: . /home/sep/.restic.env; /opt/scripts/nextcloud_to_s3.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id3 }} && rm -rf {{ hc_id3 }}
     cron_file: nextcloud-to-s3

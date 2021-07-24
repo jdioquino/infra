@@ -47,4 +47,4 @@
     cron_file: "{{ item.file }}"
   loop:
     - { name: 'backup docker files to nfs', minute: '45', hour: '*',  user: 'root', job: '/opt/scripts/docker-data_restic-backup && wget http://hea.{{ domain_name }}/ping/{{ hc_id }} && rm -rf {{ hc_id }}', file: 'backup_docker-files' }
-    - { name: 'remove old restic backups', minute: '*', hour: '2',  user: 'root', job: '/opt/scripts/remove-old-restic-backup.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id2 }} && rm -rf {{ hc_id2 }}', file: 'remove-old-restic-backup' }
+    - { name: 'remove old restic backups', minute: '10', hour: '2',  user: 'root', job: '/opt/scripts/remove-old-restic-backup.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id2 }} && rm -rf {{ hc_id2 }}', file: 'remove-old-restic-backup' }
