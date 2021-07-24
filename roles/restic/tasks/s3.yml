@@ -30,13 +30,18 @@
     group: "{{ docker_user.name }}"
   loop:
     - { file: 'nextcloud_to_s3.sh', dest: '/opt/scripts', mode: '0755' }
+    - { file: 'bitwarden_to_s3.sh', dest: '/opt/scripts', mode: '0755' }
     - { file: '.restic.env', dest: '/home/sep', mode: '0600' }
+    - { file: '.restic-bitwarden.env', dest: '/home/sep', mode: '0600' }
 
 - name: create cron jobs
   cron:
-    name: nextcloud to s3
-    minute: 30
+    name: "{{ item.name }}"
+    minute: "{{ item.minute }}"
     hour: "*"
     user: root
-    job: . /home/sep/.restic.env; /opt/scripts/nextcloud_to_s3.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id3 }} && rm -rf {{ hc_id3 }}
-    cron_file: nextcloud-to-s3
+    job: "{{ item.job }}"
+    cron_file: "{{ item.file }}"
+  loop:
+    - { name: 'nextcloud to s3', minute: '30', job: '. /home/{{ docker_user.name }}/.restic.env; /opt/scripts/nextcloud_to_s3.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id3 }} && rm -rf {{ hc_id3 }}', file: 'nextcloud-to-s3' }
+    - { name: 'bitwarden to s3', minute: '35', job: '. /home/{{ docker_user.name }}/.restic-bitwarden.env; /opt/scripts/bitwarden_to_s3.sh && wget http://hea.{{ domain_name }}/ping/{{ hc_id4 }} && rm -rf {{ hc_id4 }}', file: 'bitwarden-to-s3' }
