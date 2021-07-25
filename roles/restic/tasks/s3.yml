@@ -38,7 +38,7 @@
   cron:
     name: "{{ item.name }}"
     minute: "{{ item.minute }}"
-    hour: "*"
+    hour: "1"
     user: root
     job: "{{ item.job }}"
     cron_file: "{{ item.file }}"
