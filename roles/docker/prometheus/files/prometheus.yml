@@ -41,9 +41,21 @@ scrape_configs:
         - wg-server:9300
         - node-2:9300
 
-  - job_name: 'healthchecks-my-cron-jobs'
+  - job_name: 'healthchecks-docker_data-to-nfs'
     scheme: http
     metrics_path: /projects/fdaff6ef-fd97-4b23-8487-ced3a8b480c5/metrics/{{ hc_api }}
+    static_configs:
+    - targets: ['hea.{{ domain_name }}']
+
+  - job_name: 'healthchecks-remove-old-docker_data'
+    scheme: http
+    metrics_path: /projects/9c4a8629-406b-400e-8a65-43928adf244e/metrics/{{ hc_api2 }}
+    static_configs:
+    - targets: ['hea.{{ domain_name }}']
+
+  - job_name: 'healthchecks-docker_data-to-S3'
+    scheme: http
+    metrics_path: /projects/c1f4a65b-70ac-484e-939e-ee88550b5e2a/metrics/{{ hc_api3 }}
     static_configs:
     - targets: ['hea.{{ domain_name }}']
 
