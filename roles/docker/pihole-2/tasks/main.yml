@@ -1,0 +1,7 @@
+- name: deploy compose files
+  import_tasks: deploy.yml
+  tags: [ never, deploy ]
+
+- name: update container
+  import_tasks: update.yml
+  tags: [ never, update ]

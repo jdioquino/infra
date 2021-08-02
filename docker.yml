@@ -48,3 +48,5 @@
     - cadvisor
     - filebeat
     - haproxy
+    - traefik
+    - pihole-2

@@ -1,5 +1,5 @@
 - name: restic
-  hosts: node-2
+  hosts: droplet-1
   become: yes
   roles:
     - restic

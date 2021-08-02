@@ -1,0 +1,36 @@
+version: "3"
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80/tcp"
+      - "443/tcp"
+    environment:
+      TZ: 'Asia/Manila'
+      DNS1: 1.1.1.1
+      DNS2: 1.0.0.1
+    volumes:
+       - '/docker-data/pihole/etc-pihole/:/etc/pihole/'
+       - '/docker-data/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    networks:
+      - data-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+      - "traefik.http.routers.pihole.rule=Host(`pihh.jdut.me`)"
+      - "traefik.http.routers.pihole.tls=true"
+      - "traefik.http.routers.pihole.entrypoints=websecure"
+      - "traefik.http.routers.pihole.tls.certresolver=le"
+      - "traefik.docker.network=data-net"
+    restart: unless-stopped
+
+networks:
+  data-net:
+    external: true

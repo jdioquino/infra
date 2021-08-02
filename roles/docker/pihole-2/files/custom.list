@@ -1,0 +1,28 @@
+192.168.1.73 node-3
+192.168.1.72 jel.{{ domain_name }}
+192.168.1.72 kib.{{ domain_name }}
+192.168.1.72 hei.{{ domain_name }}
+192.168.1.72 gra.{{ domain_name }}
+192.168.1.72 prm.{{ domain_name }}
+192.168.1.72 hea.{{ domain_name }}
+192.168.1.72 tra.{{ domain_name }}
+192.168.1.72 pih.{{ domain_name }}
+192.168.1.72 tid.{{ domain_name }}
+192.168.1.72 qbi.{{ domain_name }}
+192.168.1.72 jac.{{ domain_name }}
+192.168.1.72 rad.{{ domain_name }}
+192.168.1.72 por.{{ domain_name }}
+192.168.1.72 nex.{{ domain_name }}
+192.168.1.72 piw.{{ domain_name }}
+192.168.1.72 bit.{{ domain_name }}
+192.168.1.1 router.lan
+192.168.1.20 nuc-host
+192.168.1.99 template
+192.168.100.1 lighthouse
+10.10.0.1 wg-server
+192.168.1.51 vpn
+192.168.1.52 dns
+{{ droplet_ip }} droplet-1
+192.168.1.72 trn.{{ domain_name }}
+192.168.1.72 node-2
+192.168.1.2 wds-client
