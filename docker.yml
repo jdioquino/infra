@@ -6,8 +6,6 @@
     - ddclient
     - filebeat
     - traefik
-    - nextcloud
-    - bitwarden
     - tiddlywiki
     - heimdall
     - healthchecks
@@ -50,3 +48,5 @@
     - haproxy
     - traefik
     - pihole-2
+    - nextcloud
+    - bitwarden
