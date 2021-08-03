@@ -15,7 +15,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
-      - "traefik.http.routers.bitwarden.rule=Host(`bit.{{ domain_name }}`)"
+      - "traefik.http.routers.bitwarden.rule=Host(`bitt.{{ domain_name }}`)"
       - "traefik.http.routers.bitwarden.entrypoints=websecure"
       - "traefik.http.routers.bitwarden.tls.certresolver=le"
       - "traefik.docker.network=private-net"

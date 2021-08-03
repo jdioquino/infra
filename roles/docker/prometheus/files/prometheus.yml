@@ -78,9 +78,9 @@ scrape_configs:
         #- http://jac.{{ domain_name }}
         #- http://rad.{{ domain_name }}
         #- http://por.{{ domain_name }}
-        #- http://nex.{{ domain_name }}
+        - http://next.{{ domain_name }}
         #- http://piw.{{ domain_name }}
-        #- http://bit.{{ domain_name }}
+        - http://bitt.{{ domain_name }}
         #- http://trn.{{ domain_name }}
     relabel_configs:
       - source_labels: [__address__]
