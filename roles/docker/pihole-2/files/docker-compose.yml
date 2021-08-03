@@ -24,7 +24,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.pihole.loadbalancer.server.port=80"
-      - "traefik.http.routers.pihole.rule=Host(`pihh.jdut.me`)"
+      - "traefik.http.routers.pihole.rule=Host(`pihh.{{ domain_name }}`)"
       - "traefik.http.routers.pihole.tls=true"
       - "traefik.http.routers.pihole.entrypoints=websecure"
       - "traefik.http.routers.pihole.tls.certresolver=le"
