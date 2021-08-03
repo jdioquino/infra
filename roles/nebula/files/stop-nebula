@@ -1,0 +1,3 @@
+#!/bin/bash
+#sudo kill $(pgrep -l nebula | awk '{print $1}') && echo 'nebula is stopped'
+sudo pkill nebula && echo 'nebula is stopped'

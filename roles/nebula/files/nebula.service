@@ -1,0 +1,11 @@
+[Unit]
+Description=Nebula Network
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/start-nebula
+ExecStop=/bin/bash /usr/bin/stop-nebula
+
+[Install]
+WantedBy=multi-user.target

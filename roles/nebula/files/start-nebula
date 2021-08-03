@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd /opt/nebula && sudo ./nebula -config config.node.yaml

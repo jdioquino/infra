@@ -1,0 +1,3 @@
+- name: install and configure nebula
+  import_tasks: install.yml
+  tags: [ never, install ]

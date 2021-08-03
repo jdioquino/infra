@@ -1,0 +1,5 @@
+- name: nebula
+  hosts: node-3
+  become: yes
+  roles:
+    - nebula

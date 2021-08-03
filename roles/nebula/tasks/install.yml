@@ -1,0 +1,37 @@
+---
+- name: Create nebula directory
+  file:
+    path: /opt/nebula
+    state: directory
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+
+- name: Transfer nebula files with variables
+  template:
+    src: files/{{ item.file }}
+    dest: "{{ item.dest }}"
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  loop:
+    - { file: 'ca.crt', dest: '/opt/nebula' }
+    - { file: 'config.node.yaml', dest: '/opt/nebula' }
+    - { file: 'node-3.crt', dest: '/opt/nebula' }
+    - { file: 'node-3.key', dest: '/opt/nebula' }
+
+- name: Transfer nebula files
+  copy:
+    src: files/{{ item.file }}
+    dest: "{{ item.dest }}"
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  loop:
+    - { file: 'nebula', dest: '/opt/nebula' }
+    - { file: 'nebula.service', dest: '/etc/systemd/system/' }
+    - { file: 'start-nebula', dest: '/usr/bin' }
+    - { file: 'stop-nebula', dest: '/usr/bin' }
+
+- name: start and enable nebula service
+  service:
+    name: nebula
+    state: started
+    enabled: yes
