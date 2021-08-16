@@ -1,5 +1,6 @@
 - name: wireguard
-  hosts: vpn,localhost
+  #hosts: vpn,localhost
+  hosts: wg
   become: yes
   roles:
     - wireguard

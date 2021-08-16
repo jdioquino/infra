@@ -7,8 +7,8 @@ wg_privatekey: !vault |
           33373366653637316137353136643933663365653838353861333665346530316232633439306661
           3937613261653865356438356565363038383264663237656335
 
-wg_conffile: wg-laptop.conf
-wg_service: wg-laptop
+wg_conffile: hplaptop_wg.conf
+wg_service: hplaptop_wg
 
 domain_name: !vault |
           $ANSIBLE_VAULT;1.1;AES256
