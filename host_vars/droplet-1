@@ -14,6 +14,7 @@ nebula_keyname: lighthouse1
 lighthouse: true
 hosts: "#hosts"
 commentout: "#"
+port: 4242
 
 domain_name: !vault |
           $ANSIBLE_VAULT;1.1;AES256

@@ -5,3 +5,4 @@ nebula_keyname: node-3
 lighthouse: false
 hosts: hosts
 commentout: "-"
+port: 0
