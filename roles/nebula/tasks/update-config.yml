@@ -1,0 +1,9 @@
+---
+- name: compare config files
+  template:
+    src: files/config.node.yaml
+    dest: /opt/nebula/config.node.yaml
+    mode: 0644
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  notify: reload nebula

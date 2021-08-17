@@ -1,0 +1,21 @@
+---
+- name: stop wireguard service
+  service:
+    name: nebula
+    state: stopped
+  listen: "reload nebula"
+
+- name: copy config file
+  template:
+    src: files/config.node.yaml
+    dest: /opt/nebula/config.node.yaml
+    mode: 0644
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  listen: "reload nebula"
+
+- name: start wireguard service
+  service:
+    name: nebula
+    state: started
+  listen: "reload nebula"

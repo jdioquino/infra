@@ -1,3 +1,7 @@
 - name: install and configure nebula
   import_tasks: install.yml
   tags: [ never, install ]
+
+- name: install and configure nebula
+  import_tasks: update-config.yml
+  tags: [ never, update ]

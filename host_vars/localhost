@@ -10,6 +10,11 @@ wg_privatekey: !vault |
 wg_conffile: hplaptop_wg.conf
 wg_service: hplaptop_wg
 
+nebula_keyname: hp-laptop
+lighthouse: false
+hosts: hosts
+commentout: "-"
+
 domain_name: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           30343039666632306363363633653366346535653566653066303330366537663866303534666238

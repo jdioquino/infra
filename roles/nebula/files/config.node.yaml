@@ -17,13 +17,13 @@ pki:
 #   "{nebula ip}": ["{routable ip/dns name}:{routable port}"]
 # Example, if your lighthouse has the nebula IP of 192.168.100.1 and has the real ip address of 100.64.22.11 and runs on port 4242:
 static_host_map:
-  "192.168.100.1": ["{{ droplet_pubip }}:4242"]
+  "{{ lighthouse_privateip }}": ["{{ droplet1_pubip }}:4242"]
 
 
 lighthouse:
   # am_lighthouse is used to enable lighthouse functionality for a node. This should ONLY be true on nodes
   # you have configured to be lighthouses in your network
-  am_lighthouse: false
+  am_lighthouse: {{ lighthouse }}
   # serve_dns optionally starts a dns listener that responds to various queries and can even be
   # delegated to for resolution
   #serve_dns: false
@@ -37,8 +37,8 @@ lighthouse:
   # hosts is a list of lighthouse hosts this node should report to and query from
   # IMPORTANT: THIS SHOULD BE EMPTY ON LIGHTHOUSE NODES
   # IMPORTANT2: THIS SHOULD BE LIGHTHOUSES' NEBULA IPs, NOT LIGHTHOUSES' REAL ROUTABLE IPs
-  hosts:
-    - "192.168.100.1"
+  {{ hosts }}:
+    {{ commentout }} "{{ lighthouse_privateip }}"
 
 # Port Nebula will be listening on. The default here is 4242. For a lighthouse node, the port should be defined,
 # however using port 0 will dynamically assign a port and is recommended for roaming nodes.

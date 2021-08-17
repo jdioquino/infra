@@ -1,5 +1,5 @@
 - name: nebula
-  hosts: node-3
+  hosts: node-3,droplet-1,localhost
   become: yes
   roles:
     - nebula
