@@ -20,3 +20,22 @@
   become: true
   loop:
     - cadvisor
+
+- name: transfer validate_cadvisor.py
+  template:
+    src: files/validate_cadvisor.py
+    dest: /opt/scripts/
+    mode: 0755
+    owner: "{{ docker_user.name }}"
+    group: "{{ docker_user.name }}"
+  become: yes
+
+- name: schedule validate_cadvisor.py on cron
+  cron:
+    name: validate cadvisor
+    minute: 5
+    hour: "*/1"
+    user: root
+    job: /opt/scripts/validate_cadvisor.py
+    cron_file: validate_cadvisor
+  become: yes

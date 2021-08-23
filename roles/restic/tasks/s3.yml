@@ -33,6 +33,7 @@
     - { file: 'bitwarden_to_s3.sh', dest: '/opt/scripts', mode: '0755' }
     - { file: '.restic.env', dest: '/home/sep', mode: '0600' }
     - { file: '.restic-bitwarden.env', dest: '/home/sep', mode: '0600' }
+    - { file: 'secret', dest: '/opt/scripts', mode: '0600' }
 
 - name: create cron jobs
   cron:

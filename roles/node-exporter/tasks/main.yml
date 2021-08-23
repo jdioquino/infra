@@ -1,3 +1,4 @@
 - name: install node exporter
   import_tasks: install.yml
-  tags: [ never, clone ]
+  become: yes
+  tags: [ never, clone, deploy ]

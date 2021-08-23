@@ -1,5 +1,5 @@
 - name: restic
-  hosts: droplet-1
+  hosts: wg-droplet-1
   become: yes
   roles:
     - restic

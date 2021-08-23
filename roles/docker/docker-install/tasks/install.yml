@@ -44,6 +44,12 @@
   - set_fact:
       ansible_python_interpreter: /usr/bin/python3
 
+  - name: upgrade pip to latest version
+    pip:
+      name: pip
+      executable: pip3
+      state: latest
+
   - name: install docker python libraries
     pip:
       name: docker-compose

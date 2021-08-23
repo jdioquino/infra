@@ -20,7 +20,7 @@ services:
       - --certificatesresolvers.le.acme.email={{ ddclient_user }}
       - --certificatesresolvers.le.acme.storage=/acme.json
       - --serversTransport.insecureSkipVerify=true
-      - --log.level=DEBUG
+      - --log.level=info
       - --log.filePath=/var/log/traefik.log
     environment:
       - CF_API_EMAIL={{ ddclient_user }}

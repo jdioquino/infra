@@ -1,5 +1,6 @@
-- hosts: droplet-1
+- hosts: offsite
   roles:
+    - docker-install
     - docker-network
     - blackbox-exporter
     - cadvisor
@@ -8,3 +9,4 @@
     - pihole-2
     - nextcloud
     - bitwarden
+    - node-exporter

@@ -12,8 +12,9 @@ wg_service: droplet-1_wg
 
 nebula_keyname: lighthouse1
 lighthouse: true
-hosts: #hosts
-commentout: #
+hosts: "#hosts"
+commentout: "#"
+port: 4242
 
 domain_name: !vault |
           $ANSIBLE_VAULT;1.1;AES256
