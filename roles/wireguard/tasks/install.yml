@@ -65,3 +65,22 @@
       name: wg-quick@{{ wg_service }}
       state: started
       enabled: yes
+
+  - name: transfer validate_wg.py
+    template:
+      src: files/validate_wg.py
+      dest: /opt/scripts/
+      mode: 0755
+      owner: "{{ docker_user.name }}"
+      group: "{{ docker_user.name }}"
+    become: yes
+
+  - name: schedule validate_wg.py on cron
+    cron:
+      name: validate wireguard
+      minute: 10
+      hour: "*/1"
+      user: root
+      job: /opt/scripts/validate_wg.py
+      cron_file: validate_wireguard
+    become: yes
