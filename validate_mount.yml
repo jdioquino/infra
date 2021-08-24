@@ -1,0 +1,29 @@
+- name: Validate Mounts
+  hosts: onsite
+  become: yes
+  tags: [ never, deploy ]
+  tasks:
+    - name: create scripts directory
+      file:
+        path: /opt/scripts
+        state: directory
+        owner: "{{ docker_user.name }}"
+        group: "{{ docker_user.name }}"
+        mode: "{{ docker_compose_directory_mask }}"
+
+    - name: transfer validate_mount.py
+      template:
+        src: files/validate_mount.py
+        dest: /opt/scripts/
+        mode: 0755
+        owner: "{{ docker_user.name }}"
+        group: "{{ docker_user.name }}"
+
+    - name: schedule validate_mount.py on cron
+      cron:
+        name: validate mounts
+        minute: 15
+        hour: "*/1"
+        user: root
+        job: /opt/scripts/validate_mount.py
+        cron_file: validate_mount
